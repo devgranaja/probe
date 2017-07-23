@@ -1,0 +1,13 @@
+mysql:
+  db: write-math
+  host: localhost
+  passwd: my secret password
+  user: root
+other:
+  preprocessing_queue:
+  - preprocessing.scale_and_center
+  - preprocessing.dot_reduction
+  - preprocessing.connect_lines
+  use_anonymous: true
+tree:
+  branch: leaf
