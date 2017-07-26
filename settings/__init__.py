@@ -10,7 +10,7 @@ class FileType(Enum):
 
 
 class Settings(object):
-    def __init__(self, filename: str = './config.yml', filetype: Enum = FileType.YML):
+    def __init__(self, filename: str = 'config.yml', filetype: Enum = FileType.YML):
         try:
             file = open(filename, 'r')
         except IOError:
@@ -20,11 +20,18 @@ class Settings(object):
 
         if filetype is FileType.YML:
             self._filetype = filetype
-            self._config = yaml.load(file)
+            # File may be empty
+            try:
+                self._config = yaml.load(file)
+            except Exception:
+                self._config = None
         else:
             # TODO: not implemented
             self._filetype = FileType.UNKNOWN
             raise TypeError('Type not implemented yet')
+
+        if self._config is None:
+            self._config = {}
 
     @property
     def filename(self) -> str:
