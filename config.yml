@@ -1,13 +1,25 @@
-mysql:
-  db: write-math
-  host: localhost
-  passwd: my secret password
-  user: root
-other:
-  preprocessing_queue:
-  - preprocessing.scale_and_center
-  - preprocessing.dot_reduction
-  - preprocessing.connect_lines
-  use_anonymous: true
-tree:
-  branch: leaf
+general:
+  server: 192.168.1.100
+probe:
+  location:
+    area: TIC
+    building: HURS
+    city: "C\xF3rdoba"
+    floor: Semisotano
+    room: CPD
+  name: probe01
+  sensor:
+  - description: You might write here a short description about the particular sensor
+    function: null
+    id: 1
+    module: selenium
+    periodicity: 1h
+    type: Automatism
+    version: 0.1
+  - description: You might write here a short description about the particular sensor
+    function: null
+    id: 2
+    module: dh11
+    periodicity: 15m
+    type: Temperature
+    version: 0.1
