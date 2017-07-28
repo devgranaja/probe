@@ -3,7 +3,8 @@ import os
 
 
 def pytest_namespace():
-    return {'filename': './test_config.yml'}
+    return {'filename': './test_config.yml',
+            'chromedriver': '../automatism/driver/chromedriver/mac/chromedriver'}
 
 
 # https://stackoverflow.com/questions/42652228/removing-cached-files-after-a-py-test-run

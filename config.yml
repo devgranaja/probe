@@ -4,7 +4,7 @@ probe:
   location:
     area: TIC
     building: HURS
-    city: "C\xF3rdoba"
+    city: Córdoba
     floor: Semisotano
     room: CPD
   name: probe01
