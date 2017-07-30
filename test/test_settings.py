@@ -1,5 +1,5 @@
-from settings import FileType
-from settings import Settings
+from probe.technology.settings import FileType
+from probe.technology.settings import Settings
 import os.path
 import pytest
 

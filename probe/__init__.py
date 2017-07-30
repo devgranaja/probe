@@ -1,5 +1,5 @@
-from settings import Settings
-from settings import FileType
+from probe.technology.settings import Settings
+from probe.technology.settings import FileType
 
 
 if __name__ == '__main__':
