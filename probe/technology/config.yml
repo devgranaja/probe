@@ -8,18 +8,14 @@ probe:
     floor: Semisotano
     room: CPD
   name: probe01
-  sensor:
+  actions:
   - description: You might write here a short description about the particular sensor
     function: null
     id: 1
     module: selenium
-    periodicity: 1h
-    type: Automatism
-    version: 0.1
+    periodicity: 60
   - description: You might write here a short description about the particular sensor
     function: null
     id: 2
     module: dh11
-    periodicity: 15m
-    type: Temperature
-    version: 0.1
+    periodicity: 15
