@@ -1,0 +1,28 @@
+general:
+  server: 192.168.1.100
+probe:
+  probe_name: probe01
+      probe_description: this probe scans Cordoba user applications
+  location:
+    area: TIC
+    building: HURS
+    city: Córdoba
+    floor: Semisotano
+    room: CPD
+  actions:
+  - action_name: check X app
+    action_description: You might write here a short description about the particular sensor
+    function: null
+    action_id: 1
+    module: selenium
+    periodicity: 1
+    action_type: Automatism
+    version: 0.1
+  - action_name: check room temperature
+    action_description: You might write here a short description about the particular sensor
+    function: null
+    actin_id: 2
+    module: dh11
+    periodicity: 15
+    action_type: Temperature
+    version: 0.1
