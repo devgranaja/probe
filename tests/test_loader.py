@@ -16,9 +16,9 @@ def test_load_actions():
     assert len(actions) > 0
 
 
-def test_is_not_asyncronous():
+def test_is_not_a_action():
     previous = len(actions)
-    from tactions import no_async_action
+    from tactions import no_decorated_function
     assert len(actions) == previous
 
 sys.path = path

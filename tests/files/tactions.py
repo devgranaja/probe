@@ -1,11 +1,10 @@
-from probe.technology.loader import aaction
+from probe.technology.loader import action
 
 
-@aaction
+@action
 async def simple_aaction():
     print('my first action')
 
 
-@aaction
-def no_async_action():
-    print('I am not async')
+def no_decorated_function():
+    print('I am not a action')
