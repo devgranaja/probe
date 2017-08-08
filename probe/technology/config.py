@@ -1,6 +1,8 @@
+import logging
 import os
 import yaml
 
+log = logging.getLogger(__name__)
 
 class Config(dict):
 
@@ -12,6 +14,7 @@ class Config(dict):
         try:
             with open(filename) as yaml_file:
                 obj = yaml.safe_load(yaml_file)
+                log.info('Configuration yaml file loaded.')
         except IOError as e:
             e.strerror = 'Unable to load file configuration: {}'.format(e.strerror)
             raise

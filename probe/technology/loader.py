@@ -1,7 +1,11 @@
+import logging
+
+log = logging.getLogger(__name__)
+
 actions = {}
 
 
 def action(func):
-    print('at decorator with ', func.__name__)
     actions[func.__name__] = func
+    log.debug('Action {} registered.'.format(func.__name__))
     return func

@@ -12,7 +12,7 @@ def test_no_actions():
 
 
 def test_load_actions():
-    from tactions import simple_aaction
+    from tactions import simple_action
     assert len(actions) > 0
 
 
@@ -21,16 +21,5 @@ def test_is_not_a_action():
     from tactions import no_decorated_function
     assert len(actions) == previous
 
-sys.path = path
 
-"""
-def test_load():
-    directory = os.path.join(os.path.dirname(__file__), 'files')
-    module_name = 'tactions.py'
-    path = sys.path
-    sys.path.insert(0, directory)
-    try:
-        module = __import__(module_name)
-    finally:
-        sys.path = path
-"""
+sys.path = path

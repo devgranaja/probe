@@ -2,7 +2,7 @@ from probe.technology.loader import action
 
 
 @action
-async def simple_aaction():
+async def simple_action():
     print('my first action')
 
 
