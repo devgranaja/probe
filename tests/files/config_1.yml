@@ -21,7 +21,7 @@ probe:
   - action_name: check room temperature
     action_description: You might write here a short description about the particular sensor
     function: null
-    actin_id: 2
+    action_id: 2
     module: dh11
     periodicity: 15
     action_type: Temperature
