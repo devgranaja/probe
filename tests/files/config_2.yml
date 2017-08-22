@@ -16,7 +16,7 @@ probe:
     periodicity: 1
     version: 0.1
   - action_name: sync_sleep
-    action_description: usual sleep method (time)
-    action_id: 2
-    periodicity: 15
+    action_description: asyncronous sleep method (asyncio)
+    action_id: 1
+    periodicity: 1
     version: 0.1

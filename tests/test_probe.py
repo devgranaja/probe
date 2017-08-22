@@ -25,12 +25,10 @@ def act():
     sys.path = path
     return actions
 
-
+"""
 def test_create_a_task_from_async_action(conf, act):
     async def aaction():
-        print('async function started')
         asyncio.sleep(3)
-        print('async function finished')
 
     action = aaction
 
@@ -43,9 +41,7 @@ def test_create_a_task_from_async_action(conf, act):
 
 def test_create_a_task_from_non_async_action(conf, act):
     async def no_aaction():
-        print('non async function started')
         time.sleep(3)
-        print('non async function finished')
 
     action = no_aaction
 
@@ -62,8 +58,8 @@ def test_create_a_probe(conf, act):
     print(p.tasks)
     assert p.tasks
 
-
-def execute_tasks(conf, act):
+"""
+def test_execute_tasks(conf, act):
     p = Probe(conf, act)
     p.create_tasks()
     p.execute_tasks()
