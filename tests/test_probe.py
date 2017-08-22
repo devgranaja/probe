@@ -19,10 +19,7 @@ def conf():
 
 @pytest.fixture
 def act():
-    path = sys.path
-    sys.path.append(os.path.join(os.path.dirname(__file__), 'files'))
-    import tactions_2
-    sys.path = path
+    from .files import tactions_2
     return actions
 
 """
