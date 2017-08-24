@@ -1,7 +1,7 @@
 import asyncio
 import os
 import pytest
-from probe.application.execution import create_probe, start_probe, stop_probe
+from probe.application.execution import create_probe, cancel_probe
 from probe.technology.config import Config
 from probe.technology.loader import actions
 
@@ -23,8 +23,7 @@ def act():
 
 def test_run_probe(conf, act):
     loop = asyncio.get_event_loop()
-    create_probe(conf, act, loop)
-    tasks = start_probe()
+    tasks = create_probe(conf, act, loop)
 
     try:
         print("\n[ ---------- Running probe ---------- ]\n"
@@ -33,5 +32,5 @@ def test_run_probe(conf, act):
     except KeyboardInterrupt:
         pass
     finally:
-        stop_probe()
+        cancel_probe()
         loop.close()
