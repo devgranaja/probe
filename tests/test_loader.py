@@ -1,10 +1,5 @@
 import pytest
 from probe.technology.loader import actions
-import os
-import sys
-
-path = sys.path
-sys.path.append(os.path.join(os.path.dirname(__file__), 'files'))
 
 
 def test_no_actions():
@@ -12,14 +7,11 @@ def test_no_actions():
 
 
 def test_load_actions():
-    from tactions_1 import simple_action
+    from .files.tactions_1 import simple_action
     assert len(actions) > 0
 
 
 def test_is_not_a_action():
     previous = len(actions)
-    from tactions_1 import no_decorated_function
+    from .files.tactions_1 import no_decorated_function
     assert len(actions) == previous
-
-
-sys.path = path

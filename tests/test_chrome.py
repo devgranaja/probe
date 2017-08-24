@@ -2,9 +2,12 @@ from selenium import webdriver
 import pytest
 
 
+CHROMEDRIVER_PATH = '../probe/technology/automaton/driver/chromedriver/mac/chromedriver'
+
+
 def test_chrome():
     # create a new Chrome session
-    driver = webdriver.Chrome(pytest.chromedriver)
+    driver = webdriver.Chrome(CHROMEDRIVER_PATH)
     driver.implicitly_wait(30)
     driver.maximize_window()
 
