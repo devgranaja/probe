@@ -3,12 +3,14 @@ from probe.domain.probe import Probe
 probe = None
 
 
-def create_probe(conf, act, loop):
+async def create_probe(conf, act, loop):
     global probe
     probe = Probe(conf, act, loop)
-    tasks = probe.create_tasks()
-    return tasks
 
 
-def cancel_probe():
-    probe.cancel_tasks()
+async def start_probe():
+    await probe.execute_tasks()
+
+
+async def cancel_probe():
+    await probe.cancel_tasks()

@@ -11,8 +11,12 @@ probe:
     room: CPD
   actions:
   - action_name: async_sleep
-    action_description: asyncronous sleep method (asyncio)
+    action_description: asyncio sleep 1
     action_id: 1
     periodicity: 1
     version: 0.1
-  
+  - action_name: get_url
+    action_description: aiohttp fetch
+    action_id: 1
+    periodicity: 1
+    version: 0.1

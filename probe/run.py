@@ -1,7 +1,8 @@
 import os
+import signal
 import asyncio
 from probe.technology.config import Config
-from probe.application.execution import create_probe,  cancel_probe
+from probe.application.execution import create_probe,  start_probe, cancel_probe
 
 from probe.technology.actions import probe_actions
 from probe.technology.loader import actions
@@ -14,19 +15,31 @@ def load_configuration():
     cfg.from_yaml(fn)
     return cfg
 
-if __name__ == '__main__':
 
-    configuration = load_configuration()
+def raise_system_exit():
+    raise SystemExit
 
-    loop = asyncio.get_event_loop()
-    create_probe(configuration, actions, loop)
+async def main(configuration, loop):
+
+    await create_probe(configuration, actions, loop)
+    await start_probe()
 
     try:
         print("\n[ ---------- Running probe ---------- ]\n"
               "(Press CTRL-C to quit)\n")
-        loop.run_forever()
-    except KeyboardInterrupt:
+    except (SystemExit, KeyboardInterrupt):
         pass
     finally:
-        cancel_probe()
-        loop.close()
+        print("\n[ ^^^ Closing probe ^^^]\n")
+        await cancel_probe()
+
+
+if __name__ == '__main__':
+    configuration = load_configuration()
+    loop = asyncio.get_event_loop()
+
+    loop.add_signal_handler(signal.SIGINT, raise_system_exit)
+    loop.add_signal_handler(signal.SIGTERM, raise_system_exit)
+
+    loop.run_until_complete(main(configuration, loop))
+    loop.close()

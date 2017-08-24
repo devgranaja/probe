@@ -1,6 +1,8 @@
-
 import asyncio
+import aiohttp
+import async_timeout
 import time
+
 
 from probe.technology.loader import action
 
@@ -18,14 +20,17 @@ async def async_sleep():
 
 
 @action
-def sync_sleep():
-    print('time.sleep 10s')
-    time.sleep(10)
-    return('S_OK')
+async def get_url():
+    async with aiohttp.ClientSession() as session:
+        await fetch(session, 'http://www.python.org')
+        await fetch(session, 'http://www.google.es')
+        await fetch(session, 'http://www.juntadeandalucia.es')
+        await fetch(session, 'http://www.saludjaen.es')
 
-
-@action
-def sync_sleep2():
-    print('time.sleep 10s')
-    time.sleep(10)
-    return('S2_OK')
+async def fetch(session, url):
+    with async_timeout.timeout(10):
+        async with session.get(url) as response:
+            start = time.time()
+            await response.text()
+            total = time.time() - start
+            print('{}: {:.3f}'.format(url, total))
