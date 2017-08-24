@@ -20,13 +20,10 @@ def raise_system_exit():
     raise SystemExit
 
 async def main(configuration, loop):
-
     await create_probe(configuration, actions, loop)
     await start_probe()
-
     try:
-        print("\n[ ---------- Running probe ---------- ]\n"
-              "(Press CTRL-C to quit)\n")
+        pass
     except (SystemExit, KeyboardInterrupt):
         pass
     finally:
@@ -42,4 +39,5 @@ if __name__ == '__main__':
     loop.add_signal_handler(signal.SIGTERM, raise_system_exit)
 
     loop.run_until_complete(main(configuration, loop))
+
     loop.close()

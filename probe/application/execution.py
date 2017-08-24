@@ -9,6 +9,9 @@ async def create_probe(conf, act, loop):
 
 
 async def start_probe():
+    print('\n[ -- Running {} ({}) -- ]\n'
+          '(Press CTRL-C to quit)\n'.format(probe.name, probe.description))
+
     await probe.execute_tasks()
 
 

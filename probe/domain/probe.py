@@ -10,6 +10,9 @@ class Probe:
         else:
             raise ValueError("Probe settings must be defined")
 
+        self.name = self._configuration['probe']['probe_name']
+        self.description = self._configuration['probe']['probe_description']
+
         self._tasks = []
         self._loop = loop
         self._all_tasks = None
@@ -38,7 +41,7 @@ class Probe:
                 pass
 
     def _taskerize(self, id, name, action, periodicity=None):
-        """Create a asyncio task from a action (function)"""
+        """Create a asyncio task from a action (asyncio function)"""
         if periodicity is None:
             period = 0
         else:
