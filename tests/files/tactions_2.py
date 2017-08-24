@@ -19,7 +19,7 @@ async def async_sleep():
 
 @action
 def sync_sleep():
-    print('time.sleep 5s')
+    print('time.sleep 10s')
     time.sleep(10)
     return('S_OK')
 
