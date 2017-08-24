@@ -1,5 +1,10 @@
-from probe.technology.config import Config
+import os
 import asyncio
+from probe.technology.config import Config
+from probe.application.execution import create_probe, start_probe, stop_probe
+
+from probe.technology.actions import probe_actions
+from probe.technology.loader import actions
 
 
 def load_configuration():
@@ -12,9 +17,11 @@ def load_configuration():
 
 if __name__ == '__main__':
 
+    configuration = load_configuration()
+
     loop = asyncio.get_event_loop()
-    p = Probe(conf, act, loop)
-    start_probe(p)
+    create_probe(configuration, actions, loop)
+    start_probe()
 
     try:
         print("\n[ ---------- Running probe ---------- ]\n"
@@ -24,5 +31,5 @@ if __name__ == '__main__':
         pass
     finally:
         # loop.run_until_complete(probe.cancel_tasks())
-        probe.cancel_tasks()
+        stop_probe()
         loop.close()

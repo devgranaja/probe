@@ -1,21 +1,17 @@
 general:
   server: 192.168.1.100
 probe:
+  probe_name: probe01
+  probe_description: this probe scans Cordoba user applications
   location:
     area: TIC
     building: HURS
     city: Córdoba
     floor: Semisotano
     room: CPD
-  name: probe01
   actions:
-  - description: You might write here a short description about the particular sensor
-    function: null
-    id: 1
-    module: selenium
-    periodicity: 60
-  - description: You might write here a short description about the particular sensor
-    function: null
-    id: 2
-    module: dh11
-    periodicity: 15
+  - action_name: async_sleep
+    action_description: asyncronous sleep method (asyncio)
+    action_id: 1
+    periodicity: 1
+    version: 0.1
