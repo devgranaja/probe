@@ -58,8 +58,17 @@ def test_create_a_probe(conf, act):
     print(p.tasks)
     assert p.tasks
 
-"""
+
 def test_execute_tasks(conf, act):
     p = Probe(conf, act)
     p.create_tasks()
     p.execute_tasks()
+"""
+
+
+def test_cancel_tasks(conf, act):
+    p = Probe(conf, act)
+    p.create_tasks()
+    p.execute_tasks2()
+    p.cancel_tasks()
+    assert p.pending_tasks() == p.finished_tasks()
