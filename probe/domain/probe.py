@@ -47,16 +47,6 @@ class Probe:
         else:
             period = periodicity * 60
 
-        if asyncio.iscoroutinefunction(action):
-            # convert a coroutine to a task
-            task = asyncio.ensure_future(self._async_loop(action, period))
-
+        task = asyncio.ensure_future(action(period))
         self._tasks.append(task)
 
-    async def _async_loop(self, action, period):
-        if period == 0:
-            await action()
-        else:
-            while True:
-                await action()
-                await asyncio.sleep(period)

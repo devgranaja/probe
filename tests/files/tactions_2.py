@@ -26,6 +26,7 @@ async def get_url():
         await fetch(session, 'http://www.google.es')
         await fetch(session, 'http://www.juntadeandalucia.es')
         await fetch(session, 'http://www.saludjaen.es')
+        return('web_OK')
 
 async def fetch(session, url):
     with async_timeout.timeout(10):
