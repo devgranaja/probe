@@ -1,5 +1,5 @@
 import pytest
-from probe.technology.loader import actions
+from probe.domain.taskerize import actions
 
 
 def test_no_actions():

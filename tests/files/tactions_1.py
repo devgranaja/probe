@@ -1,4 +1,4 @@
-from probe.technology.loader import action
+from probe.domain.taskerize import action
 
 
 @action

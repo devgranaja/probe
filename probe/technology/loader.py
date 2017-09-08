@@ -4,16 +4,22 @@ import time
 
 log = logging.getLogger(__name__)
 
-actions = {}
 
 
+"""
 def action(coro):
 
     async def coro_helper():
+        result = None
+        total = None
         start = time.time()
-        result = await coro()
-        total = time.time() - start
-        print('{} {} {:06.2f}'.format(coro.__name__, result, total))
+        try:
+            result = await coro()
+            total = time.time() - start
+            init_date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(start))
+            print('[{}] {} {} {:06.2f}'.format(init_date, coro.__name__, result, total))
+        except Exception as e:
+            log.error('Unable to execute {}: {}'.format(coro.__name__, e.strerror))
         return result, total
 
     async def loop_helper(period):
@@ -32,3 +38,4 @@ def action(coro):
     return loop_helper
 
 
+"""

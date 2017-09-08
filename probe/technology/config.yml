@@ -10,13 +10,31 @@ probe:
     floor: Semisotano
     room: CPD
   actions:
-  - action_name: async_sleep
+  - action_name: asleep
     action_description: asyncronous sleep method (asyncio)
     action_id: 1
-    periodicity: 1
+    items:
+      - 'a'
+      - 'b'
+      - 'c'
+    iterations: .inf
+    period: 1
     version: 0.1
   - action_name: get_url
     action_description: aiohttp fetch
     action_id: 1
-    periodicity: 1
+    items:
+      - 'http://www.elpais.es'
+      - 'http://www.ideal.es'
+    iterations: 3
+    period: 1
+    version: 0.1
+  - action_name: aping
+    action_description: aiohttp fetch
+    action_id: 1
+    items:
+      - '217.12.28.76'
+      - '216.58.205.35'
+    iterations: 3
+    period: 1
     version: 0.1

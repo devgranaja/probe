@@ -2,10 +2,10 @@ import os
 import signal
 import asyncio
 from probe.technology.config import Config
-from probe.application.execution import create_probe,  start_probe, cancel_probe
+from probe.application.interactor import create_probe,  start_probe, cancel_probe
 
 from probe.technology.actions import probe_actions
-from probe.technology.loader import actions
+from probe.domain.taskerize import actions
 
 
 def load_configuration():
@@ -19,8 +19,8 @@ def load_configuration():
 def raise_system_exit():
     raise SystemExit
 
-async def main(configuration, loop):
-    await create_probe(configuration, actions, loop)
+async def main(configuration):
+    await create_probe(configuration, actions)
     await start_probe()
     try:
         pass
@@ -34,10 +34,10 @@ async def main(configuration, loop):
 if __name__ == '__main__':
     configuration = load_configuration()
     loop = asyncio.get_event_loop()
-
+# TODO remove signals
     loop.add_signal_handler(signal.SIGINT, raise_system_exit)
     loop.add_signal_handler(signal.SIGTERM, raise_system_exit)
-
-    loop.run_until_complete(main(configuration, loop))
+# TODO change run_until_complete by run_forever
+    loop.run_until_complete(main(configuration))
 
     loop.close()

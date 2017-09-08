@@ -3,9 +3,10 @@ from probe.domain.probe import Probe
 probe = None
 
 
-async def create_probe(conf, act, loop):
+async def create_probe(conf, act):
     global probe
-    probe = Probe(conf, act, loop)
+    probe = Probe(conf, act)
+    return probe
 
 
 async def start_probe():
