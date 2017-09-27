@@ -6,6 +6,9 @@ from collections import namedtuple
 
 # TODO Support not coroutines https://hackernoon.com/threaded-asynchronous-magic-and-how-to-wield-it-bba9ed602c32
 # TODO coroutines without parameters
+# TODO pass the loop event to tasks
+# TODO return the time at fetch function
+
 actions = {}
 
 log = logging.getLogger()
@@ -23,12 +26,12 @@ TaskResult = namedtuple('TaskResult', 'action, item, type, result, time')
 
 
 def action(coro):
-    async def loop_helper(items, iterations, period):
+    async def loop_helper(items, iterations, period, loop):
         # TODO infinite number of iterations
         iteration = 0
         while True:
             try:
-                results = await launcher_helper(coro, items)
+                results = await launcher_helper(coro, items, loop)
                 iteration += 1
                 for r in results:
                     print(r)
@@ -48,8 +51,8 @@ def action(coro):
     return loop_helper
 
 
-async def launcher_helper(coro, items):
-    tasks = [coro_helper(coro, item) for item in items]
+async def launcher_helper(coro, items, loop):
+    tasks = [coro_helper(coro, item, loop) for item in items]
     tasks_results = await asyncio.gather(*tasks, return_exceptions=True)
 
     final_results = []
@@ -63,9 +66,9 @@ async def launcher_helper(coro, items):
 
     return final_results
 
-async def coro_helper(coro, item):
+async def coro_helper(coro, item, loop):
     start = time.time()
-    result = await coro(item)
+    result = await coro(item, loop)
     total = time.time() - start
 
     return TaskResult(coro.__name__, item, TypeResult.DONE, result, total)

@@ -19,8 +19,8 @@ def load_configuration():
 def raise_system_exit():
     raise SystemExit
 
-async def main(configuration):
-    await create_probe(configuration, actions)
+async def main(configuration, loop):
+    await create_probe(configuration, actions, loop)
     await start_probe()
     try:
         pass
@@ -38,6 +38,6 @@ if __name__ == '__main__':
     loop.add_signal_handler(signal.SIGINT, raise_system_exit)
     loop.add_signal_handler(signal.SIGTERM, raise_system_exit)
 # TODO change run_until_complete by run_forever
-    loop.run_until_complete(main(configuration))
+    loop.run_until_complete(main(configuration, loop))
 
     loop.close()

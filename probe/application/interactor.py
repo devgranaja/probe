@@ -3,9 +3,9 @@ from probe.domain.probe import Probe
 probe = None
 
 
-async def create_probe(conf, act):
+async def create_probe(conf, act, loop):
     global probe
-    probe = Probe(conf, act)
+    probe = Probe(conf, act, loop)
     return probe
 
 

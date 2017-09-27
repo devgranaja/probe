@@ -29,12 +29,12 @@ probe:
     iterations: 3
     period: 1
     version: 0.1
-  - action_name: aping
+  - action_name: aioping
     action_description: aiohttp fetch
     action_id: 1
     items:
-      - '217.12.28.76'
-      - '216.58.205.35'
+      - 'www.google.es'
+      - 'www.elpais.es'
     iterations: 3
     period: 1
     version: 0.1
