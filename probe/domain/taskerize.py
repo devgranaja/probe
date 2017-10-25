@@ -6,8 +6,6 @@ from collections import namedtuple
 
 # TODO Support not coroutines https://hackernoon.com/threaded-asynchronous-magic-and-how-to-wield-it-bba9ed602c32
 # TODO coroutines without parameters
-# TODO pass the loop event to tasks
-# TODO return the time at fetch function
 
 actions = {}
 
@@ -69,6 +67,6 @@ async def launcher_helper(coro, items, loop):
 async def coro_helper(coro, item, loop):
     start = time.time()
     result = await coro(item, loop)
-    total = time.time() - start
+    end = time.time()
 
-    return TaskResult(coro.__name__, item, TypeResult.DONE, result, total)
+    return TaskResult(coro.__name__, item, TypeResult.DONE, result, end - start)

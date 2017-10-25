@@ -2,27 +2,33 @@ import asyncio
 import aiohttp
 import async_timeout
 import re
+import time
 
 from probe.domain.taskerize import action
 
 @action
 async def asleep(item, loop):
     await asyncio.sleep(3)
-    return('A_OK')
+    return('sleep_OK')
+
 
 @action
-async def get_url(url, loop):
+async def afetch(url, loop):
+
+    async def get_url(session, url, loop):
+        with async_timeout.timeout(10, loop=loop):
+            async with session.get(url) as response:
+                await response.text()
+
     async with aiohttp.ClientSession() as session:
-        await fetch(session, url, loop)
-        return ('web_OK')
+        start = time.time()
+        await get_url(session, url, loop)
+        end = time.time()
+        return end - start
 
-async def fetch(session, url, loop):
-    with async_timeout.timeout(10, loop=loop):
-        async with session.get(url) as response:
-            await response.text()
 
 @action
-async def aioping(host, loop):
+async def aping(host, loop):
     p = await asyncio.create_subprocess_exec(
         'ping', host, '-c', '10',
         stdout=asyncio.subprocess.PIPE, loop=loop)
