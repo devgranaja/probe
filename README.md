@@ -9,4 +9,4 @@ Project for the control of sensors in probes
 >
 >`$ source venv\bin\activate`
 >
->`$ pytest test`
+>`$ pytest tests`
