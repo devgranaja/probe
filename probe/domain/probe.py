@@ -6,14 +6,15 @@ import math
 
 class Probe:
 
-    def __init__(self, config, act, loop):
+    def __init__(self, config, act, repo, loop):
         if config and act:
             self._configuration = config
             self._actions = act
+
         else:
             raise ValueError("Probe settings must be defined")
-
-        self.loop = loop
+        self._repository = repo
+        self._loop = loop
         self.name = self._configuration['probe']['probe_name']
         self.description = self._configuration['probe']['probe_description']
 
@@ -30,7 +31,7 @@ class Probe:
             else:
                 iterations = act['iterations']
             period = act['period']
-            tasks.append(self._actions[act['action_name']](items, iterations, period, self.loop))
+            tasks.append(self._actions[act['action_name']](items, iterations, period, self._repository, self._loop))
 
         self._all_tasks = asyncio.gather(*tasks)
         await self._all_tasks

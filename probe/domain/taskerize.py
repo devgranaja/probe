@@ -20,11 +20,11 @@ class TypeResult(Enum):
     DONE = 0
     ERROR = 1
 
-TaskResult = namedtuple('TaskResult', 'action, item, type, result, time')
+TaskResult = namedtuple('TaskResult', 'action, item, type, value, time')
 
 
 def action(coro):
-    async def loop_helper(items, iterations, period, loop):
+    async def loop_helper(items, iterations, period, repository, loop):
         # TODO infinite number of iterations
         iteration = 0
         while True:
@@ -32,6 +32,8 @@ def action(coro):
                 results = await launcher_helper(coro, items, loop)
                 iteration += 1
                 for r in results:
+                    repository.add(r)
+                    log.debug('Result stored: '.format(r))
                     print(r)
                 if iteration == iterations:
                     return
@@ -56,7 +58,7 @@ async def launcher_helper(coro, items, loop):
     final_results = []
     for i, r in zip(items, tasks_results):
         if isinstance(r, Exception):
-            final_results.append(TaskResult(coro.__name__, None, TypeResult.ERROR, None, None))
+            final_results.append(TaskResult(coro.__name__, i, TypeResult.ERROR, None, None))
             log.error('Error executing {}({}): {}'.format(coro.__name__, i, r))
         else:
             final_results.append(r)
@@ -66,7 +68,7 @@ async def launcher_helper(coro, items, loop):
 
 async def coro_helper(coro, item, loop):
     start = time.time()
-    result = await coro(item, loop)
+    value = await coro(item, loop)
     end = time.time()
 
-    return TaskResult(coro.__name__, item, TypeResult.DONE, result, end - start)
+    return TaskResult(coro.__name__, item, TypeResult.DONE, value, end - start)

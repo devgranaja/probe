@@ -2,6 +2,7 @@ import os
 import signal
 import asyncio
 from probe.technology.config import Config
+from probe.technology.text_file_repository import TextFileRepository
 from probe.application.interactor import create_probe,  start_probe, cancel_probe
 
 from probe.technology.actions import probe_actions
@@ -20,7 +21,9 @@ def raise_system_exit():
     raise SystemExit
 
 async def main(configuration, loop):
-    await create_probe(configuration, actions, loop)
+    repository = TextFileRepository('technology/logs/probe.log')
+
+    await create_probe(configuration, actions, repository, loop)
     await start_probe()
     try:
         pass
