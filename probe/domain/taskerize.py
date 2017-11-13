@@ -1,5 +1,6 @@
 import asyncio
 import time
+import datetime
 import logging
 from enum import Enum
 from collections import namedtuple
@@ -20,7 +21,7 @@ class TypeResult(Enum):
     DONE = 0
     ERROR = 1
 
-TaskResult = namedtuple('TaskResult', 'action, item, type, value, time')
+TaskResult = namedtuple('TaskResult', 'timestamp, action, item, type, value, time')
 
 
 def action(coro):
@@ -58,7 +59,7 @@ async def launcher_helper(coro, items, loop):
     final_results = []
     for i, r in zip(items, tasks_results):
         if isinstance(r, Exception):
-            final_results.append(TaskResult(coro.__name__, i, TypeResult.ERROR, None, None))
+            final_results.append(TaskResult(datetime.datetime.now(), coro.__name__, i, TypeResult.ERROR, None, None))
             log.error('Error executing {}({}): {}'.format(coro.__name__, i, r))
         else:
             final_results.append(r)
@@ -71,4 +72,4 @@ async def coro_helper(coro, item, loop):
     value = await coro(item, loop)
     end = time.time()
 
-    return TaskResult(coro.__name__, item, TypeResult.DONE, value, end - start)
+    return TaskResult(datetime.datetime.now(), coro.__name__, item, TypeResult.DONE, value, end - start)

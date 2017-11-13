@@ -15,7 +15,7 @@ AUTHOR = 'TICJAEN'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'aiohttp', 'aioping', 'PyYAML',
+    'aiohttp', 'PyYAML',
 ]
 
 # The rest you shouldn't have to touch too much :)

@@ -1,5 +1,4 @@
-import asyncio
-import io
+import datetime
 import pytest
 from probe.technology.text_file_repository import TextFileRepository
 from probe.domain.taskerize import TaskResult
@@ -8,17 +7,17 @@ from probe.domain.taskerize import TypeResult
 
 @pytest.fixture
 def result():
-    return TaskResult('mycoroutine', 'param', TypeResult.DONE, 'OK', 0.34)
+    return TaskResult(datetime.datetime.strptime('09-11-2017 09:16:56', '%d-%m-%Y %H:%M:%S'), 'mycoroutine', 'param', TypeResult.DONE, 'OK', 0.34)
 
 
 @pytest.fixture
 def result_error():
-    return TaskResult('mycoroutine', 'paramError', TypeResult.ERROR, None, None)
+    return TaskResult(datetime.datetime.strptime('09-11-2017 09:16:23', '%d-%m-%Y %H:%M:%S'), 'mycoroutine', 'paramError', TypeResult.ERROR, None, None)
 
 
 @pytest.fixture
 def result2():
-    return TaskResult('mycoroutine', 'param2', TypeResult.DONE, 'OK', 0.66)
+    return TaskResult(datetime.datetime.strptime('09-11-2017 09:16:45', '%d-%m-%Y %H:%M:%S'), 'mycoroutine', 'param2', TypeResult.DONE, 'OK', 0.66)
 
 
 def test_add_one_item(result, tmpdir):
@@ -28,7 +27,7 @@ def test_add_one_item(result, tmpdir):
     with open(file) as f:
         content = f.read()
 
-    assert 'mycoroutine,param,DONE,OK,0.34' == content
+    assert '09-11-2017 09:16:56,mycoroutine,param,DONE,OK,0.34\n' == content
 
 
 def test_add_error_item(result_error, tmpdir):
@@ -38,7 +37,7 @@ def test_add_error_item(result_error, tmpdir):
     with open(file) as f:
         content = f.read()
 
-    assert 'mycoroutine,paramError,ERROR,None,None' == content
+    assert '09-11-2017 09:16:23,mycoroutine,paramError,ERROR,None,None\n' == content
 
 def test_get_first_item(result, tmpdir):
     file = tmpdir.join('testrepo.txt')

@@ -1,3 +1,4 @@
+import datetime
 from probe.domain.taskerize import TypeResult
 from probe.domain.taskerize import TaskResult
 
@@ -9,7 +10,7 @@ class TextFileRepository:
 
     def add(self, result):
         s = self._result_to_string(result)
-        with open(self.filename, 'w') as f:
+        with open(self.filename, 'a') as f:
             f.write(s)
 
     def get_first(self):
@@ -32,18 +33,20 @@ class TextFileRepository:
         print(lines)
 
     def _result_to_string(self, result):
-        out = ','.join([result.action, str(result.item), result.type.name, str(result.value), str(result.time)])
+        out = ','.join([datetime.datetime.strftime(result.timestamp, '%d-%m-%Y %H:%M:%S'), result.action, str(result.item), result.type.name, str(result.value), str(result.time)])
+        out += '\n'
         return out
 
     def _string_to_result(self, line):
-        items = line.split(',')
+        items = line.rstrip('\n').split(',')
 
-        items[2] = TypeResult[items[2]]  # TypeResult conversion
-        if items[3] == 'None':
-            items[3] = None
+        items[0] = datetime.datetime.strptime(items[0], '%d-%m-%Y %H:%M:%S')
+        items[3] = TypeResult[items[3]]  # TypeResult conversion
         if items[4] == 'None':
             items[4] = None
+        if items[5] == 'None':
+            items[5] = None
         else:
-            items[4] = float(items[4])  # Time conversion (seconds)
+            items[5] = float(items[5])  # Time conversion (seconds)
 
         return TaskResult(*items)
