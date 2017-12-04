@@ -1,9 +1,11 @@
 import asyncio
 import os
 import pytest
-from probe.application.interactor import create_probe, start_probe, cancel_probe
+from probe.application.interactor import create_probe, start_probe, cancel_probe, get_configuration
 from probe.technology.config import Config
 from probe.domain.taskerize import actions
+from probe.technology.text_file_repository import TextFileRepository
+
 
 
 @pytest.fixture
@@ -20,18 +22,30 @@ def act():
     from .files import tactions_2
     return actions
 
+@pytest.fixture
+def repo(tmpdir):
+    file = tmpdir.join('testrepo.txt')
+    return TextFileRepository(file)
+
 
 @pytest.mark.asyncio
-async def test_create_probe(event_loop, conf, act):
-    p = await create_probe(conf, act)
+def test_create_probe(conf, act, repo, event_loop):
+    p = create_probe(conf, act, repo, event_loop)
     assert p
 
 
 @pytest.mark.asyncio
-async def test_execute_tasks(conf, act, event_loop):
-    p = await create_probe(conf, act)
+async def test_execute_tasks(conf, act, repo, event_loop):
+    p = create_probe(conf, act, repo, event_loop)
     await start_probe()
-    assert result[0] == 'OK'
+    assert p._all_tasks
+
+
+
+def test_get_configuration(conf, act, repo, event_loop):
+    p = create_probe(conf, act, repo, event_loop)
+    c = get_configuration()
+    assert c
 
 
 

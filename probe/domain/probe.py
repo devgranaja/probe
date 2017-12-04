@@ -45,3 +45,6 @@ class Probe:
                 await self._all_tasks
             except asyncio.CancelledError:
                 pass
+
+    def configuration (self):
+        return self._configuration

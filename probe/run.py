@@ -1,9 +1,10 @@
 import os
 import sys
+import json
 from aiohttp import web
 from probe.technology.config import Config
 from probe.technology.text_file_repository import TextFileRepository
-from probe.application.interactor import create_probe,  start_probe, cancel_probe
+from probe.application.interactor import create_probe, start_probe, cancel_probe, get_configuration
 
 from probe.technology.actions import probe_actions
 from probe.domain.taskerize import actions
@@ -32,8 +33,18 @@ async def close():
     await cancel_probe()
 
 async def handler(request):
-    response = {'status': 'success'}
-    return web.json_response(response)
+    #response = {'status': 'success'}
+    response = get_configuration()
+
+    try:
+        jresponse = json.dumps(response)
+        return web.Response(text=jresponse)
+    except:
+        return web.HTTPInternalServerError()
+
+async def handler_error(request):
+    return web.HTTPInternalServerError()
+
     #return web.Response(text="Hello, world")
 
 async def startup_background_tasks(app):
@@ -43,12 +54,14 @@ async def cleanup_background_tasks(app):
     app['cleanup_probe'] = app.loop.create_task(close)
 
 def init(argv):
+
     app = web.Application()
 
     app.on_startup.append(startup_background_tasks)
-    #app.on_cleanup.append(cleanup_background_tasks)
+    app.on_cleanup.append(cleanup_background_tasks)
 
     app.router.add_get('/', handler)
+    app.router.add_get('/error', handler_error)
 
     web.run_app(app)
 

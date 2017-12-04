@@ -18,3 +18,7 @@ async def start_probe():
 
 async def cancel_probe():
     await probe.cancel_tasks()
+
+
+def get_configuration():
+    return probe.configuration()
